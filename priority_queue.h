@@ -7,8 +7,6 @@
 template <typename T>
 class priority_queue {
     size_t m_size = 0;
-    size_t m_top_index = 0;
-    size_t m_new_element_index = 0;
     std::vector<T> m_data;
 
     void make_heap_impl(){
@@ -37,8 +35,7 @@ public:
     template<typename U>
     void push(U&& value) {
         assert(!is_full());
-        m_data[m_new_element_index] = std::forward<U>(value);
-        m_new_element_index++;
+        m_data[m_size] = std::forward<U>(value);
         m_size++;
         make_heap_impl();
     }
@@ -53,13 +50,13 @@ public:
 
     const T& top() const {
         assert(has_items());
-        return m_data[m_top_index];
+        return m_data[0];
     }
 
     template<typename U>
     void replace_top(U&& value) {
         assert(has_items());
-        m_data[m_top_index] = std::forward<U>(value);
+        m_data[0] = std::forward<U>(value);
         make_heap_impl();
     }
 
