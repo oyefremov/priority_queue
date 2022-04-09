@@ -47,7 +47,7 @@ TEST(priority_queue, push_two_items_1_2) {
     queue.push(1);
     queue.push(2);
     ASSERT_EQ(2, queue.size());
-    ASSERT_EQ(1, queue.top()) << "top item is smallest of 1 and 2";
+    ASSERT_EQ(2, queue.top()) << "top item is largest of 1 and 2";
 }
 
 TEST(priority_queue, push_two_items_2_1) {
@@ -55,7 +55,7 @@ TEST(priority_queue, push_two_items_2_1) {
     queue.push(2);
     queue.push(1);
     ASSERT_EQ(2, queue.size());
-    ASSERT_EQ(1, queue.top()) << "top item is smallest of 1 and 2";
+    ASSERT_EQ(2, queue.top()) << "top item is largest of 1 and 2";
 }
 
 TEST(priority_queue, push_pop_one_item) {
@@ -69,9 +69,9 @@ TEST(priority_queue, push_pop_two_items) {
     priority_queue<int> queue(10);
     queue.push(1);
     queue.push(2);
-    ASSERT_EQ(1, queue.top()) << "top item is smallest of 1 and 2";
+    ASSERT_EQ(2, queue.top()) << "top item is largest of 1 and 2";
     queue.pop();
-    ASSERT_EQ(2, queue.top()) << "top item is the only remaining item";
+    ASSERT_EQ(1, queue.top()) << "top item is the only remaining item";
     queue.pop();
     ASSERT_TRUE(queue.empty());
 }
@@ -80,11 +80,11 @@ TEST(priority_queue, push_pop_replace_top_item) {
     priority_queue<int> queue(10);
     queue.push(1);
     queue.push(2);
-    ASSERT_EQ(1, queue.top()) << "top item is smallest of 1 and 2";
-    queue.replace_top(3);
-    ASSERT_EQ(2, queue.top()) << "top item is smallest of 2 and 3";
+    ASSERT_EQ(2, queue.top()) << "top item is largest of 1 and 2";
+    queue.replace_top(0);
+    ASSERT_EQ(1, queue.top()) << "top item is largest of 1 and 0";
     queue.pop();
-    ASSERT_EQ(3, queue.top()) << "the only remaining item is 3";
+    ASSERT_EQ(0, queue.top()) << "the only remaining item is 0";
     queue.pop();
     ASSERT_TRUE(queue.empty());
 }

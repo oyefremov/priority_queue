@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cassert>
+#include <algorithm>
 
 template <typename T>
 class priority_queue {
@@ -16,15 +17,19 @@ public:
         m_data.resize(capacity);
     }
 
-    void push(T value) {
+    void push(T&& value) {
         assert(!is_full());
-        m_data[m_new_element_index] = value;
+        m_data[m_new_element_index] = std::forward<T>(value);
         m_new_element_index++;
         m_size++;
+        std::make_heap(m_data.data(), m_data.data() + m_size);
     }
 
     T pop() {
         assert(has_items());
+        std::swap(m_data[0], m_data[m_size - 1]);
+        m_size--;
+        return std::move( m_data[m_size] );
     }
 
     const T& top() const {
@@ -34,6 +39,8 @@ public:
 
     void replace_top(T value) {
         assert(has_items());
+        m_data[m_top_index] = std::move(value);
+        std::make_heap(m_data.data(), m_data.data() + m_size);
     }
 
     bool empty() const {
