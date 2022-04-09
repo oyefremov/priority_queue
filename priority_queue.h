@@ -9,10 +9,11 @@ class priority_queue {
     std::vector<T> m_data;
 
     void make_heap_impl(){
-        for (int i=size() / 2 - 1; i>=0; i--) {
-            int largest_index = i;
-            int left_child_index = 2*i + 1;
-            int right_child_index = 2*i + 2;
+        for (size_t i=size() / 2; i>0; ) {
+            i--;
+            auto largest_index = i;
+            auto left_child_index = 2*i + 1;
+            auto right_child_index = 2*i + 2;
             if (left_child_index < size() && m_data[left_child_index] > m_data[largest_index]) {
                 largest_index = left_child_index;
             }
@@ -27,9 +28,9 @@ class priority_queue {
         }
     }
 
-    void propagate_heap_up(int i){
+    void propagate_heap_up(size_t i){
         while (i > 0) {
-            int parent_index = (i - 1) / 2;
+            auto parent_index = (i - 1) / 2;
             if (m_data[i] > m_data[parent_index]) {
                 using std::swap;
                 swap(m_data[i], m_data[parent_index]);
@@ -40,11 +41,11 @@ class priority_queue {
         }
     }
 
-    void propagate_heap_down(int i){
+    void propagate_heap_down(size_t i){
         while (i < size()) {
-            int largest_index = i;
-            int left_child_index = 2*i + 1;
-            int right_child_index = 2*i + 2;
+            size_t largest_index = i;
+            size_t left_child_index = 2*i + 1;
+            size_t right_child_index = 2*i + 2;
             if (left_child_index < size() && m_data[left_child_index] > m_data[largest_index]) {
                 largest_index = left_child_index;
             }
