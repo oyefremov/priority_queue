@@ -151,19 +151,9 @@ TEST(priority_queue, pop_randomized){
 
 TEST(priority_queue, pop){
     priority_queue<int> queue(10);
-    // Add elements from 1 to 10 in random order
-
-
-    queue.push(1);
-    queue.push(2);
-    queue.push(3);
-    queue.push(4);
-    queue.push(5);
-    queue.push(6);
-    queue.push(7);
-    queue.push(8);
-    queue.push(9);
-    queue.push(10);
+    for (int i=1; i<=10; i++) {
+        queue.push(i);
+    }
     ASSERT_EQ(10, queue.size());
     ASSERT_EQ(10, queue.top()) << "top item is largest";
     queue.pop();
