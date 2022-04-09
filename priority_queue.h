@@ -13,11 +13,14 @@ class priority_queue {
 
 public:
     priority_queue(size_t capacity) {
-        m_data.reserve(capacity);
+        m_data.resize(capacity);
     }
 
     void push(T value) {
         assert(!is_full());
+        m_data[m_new_element_index] = value;
+        m_new_element_index++;
+        m_size++;
     }
 
     T pop() {
