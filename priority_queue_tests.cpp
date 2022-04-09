@@ -1,6 +1,5 @@
-#include <gtest/gtest.h>
-
 #include "priority_queue.h"
+#include <gtest/gtest.h>
 
 TEST(priority_queue, empty_queue_is_empty) {
     priority_queue<int> queue(10);
@@ -148,7 +147,6 @@ TEST(priority_queue, pop_randomized){
     queue.pop();
 }
 
-
 TEST(priority_queue, pop){
     priority_queue<int> queue(10);
     for (int i=1; i<=10; i++) {
@@ -230,6 +228,7 @@ TEST(priority_queue, try_push_one_item_to_full_queue_item_is_replaced) {
     ASSERT_EQ(queue.size(), 1);
     ASSERT_EQ(queue.top(), 1);
 }
+
 TEST(priority_queue, try_push_multiple_items) {
     // keep track of 3three smallest elements
     priority_queue<int> queue(3);

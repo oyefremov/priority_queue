@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <cassert>
-#include <algorithm>
 
 template <typename T>
 class priority_queue {
@@ -11,6 +10,31 @@ class priority_queue {
     size_t m_top_index = 0;
     size_t m_new_element_index = 0;
     std::vector<T> m_data;
+
+    void make_heap_impl(){
+        // find next power of 2
+        size_t power_of_2 = 1;
+        while (power_of_2 < m_size) {
+            power_of_2 *= 2;
+        }
+        // one step back
+        power_of_2 /= 2;
+
+        for (int i=power_of_2; i>=0; i--) {
+            int largest_index = i;
+            int left_child_index = 2*i + 1;
+            int right_child_index = 2*i + 2;
+            if (left_child_index < m_size && m_data[left_child_index] > m_data[largest_index]) {
+                largest_index = left_child_index;
+            }
+            if (right_child_index < m_size && m_data[right_child_index] > m_data[largest_index]) {
+                largest_index = right_child_index;
+            }
+            if (largest_index != i) {
+                std::swap(m_data[i], m_data[largest_index]);
+            }
+        }
+    }
 
 public:
     priority_queue(size_t capacity) {
@@ -23,14 +47,14 @@ public:
         m_data[m_new_element_index] = std::forward<U>(value);
         m_new_element_index++;
         m_size++;
-        std::make_heap(m_data.data(), m_data.data() + m_size);
+        make_heap_impl();
     }
 
     T pop() {
         assert(has_items());
         std::swap(m_data[0], m_data[m_size - 1]);
         m_size--;
-        std::make_heap(m_data.data(), m_data.data() + m_size);
+        make_heap_impl();
         return std::move( m_data[m_size] );
     }
 
@@ -43,7 +67,7 @@ public:
     void replace_top(U&& value) {
         assert(has_items());
         m_data[m_top_index] = std::forward<U>(value);
-        std::make_heap(m_data.data(), m_data.data() + m_size);
+        make_heap_impl();
     }
 
     // Push new item is capacity allows it
@@ -70,7 +94,7 @@ public:
         auto first_chunk_size = std::min(input_size, capacity());
         m_data.assign(begin, begin + first_chunk_size);
         m_size = first_chunk_size;
-        std::make_heap(m_data.data(), m_data.data() + m_size);
+        make_heap_impl();
 
         // Process the rest of the input
         // Keep only the largest items
