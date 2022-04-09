@@ -12,15 +12,8 @@ class priority_queue {
     std::vector<T> m_data;
 
     void make_heap_impl(){
-        // find next power of 2
-        size_t power_of_2 = 1;
-        while (power_of_2 < m_size) {
-            power_of_2 *= 2;
-        }
-        // one step back
-        power_of_2 /= 2;
-
-        for (int i=power_of_2; i>=0; i--) {
+        
+        for (int i=m_size / 2 - 1; i>=0; i--) {
             int largest_index = i;
             int left_child_index = 2*i + 1;
             int right_child_index = 2*i + 2;
