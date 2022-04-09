@@ -1,17 +1,19 @@
+
+#pragma once
+
 #include <vector>
 #include <cassert>
 
 template <typename T>
-
 class priority_queue {
-    size_t size = 0;
-    size_t top_index = 0;
-    size_t new_element_index = 0;
-    std::vector<T> data;
+    size_t m_size = 0;
+    size_t m_top_index = 0;
+    size_t m_new_element_index = 0;
+    std::vector<T> m_data;
 
 public:
     priority_queue(size_t capacity) {
-        data.reserve(capacity);
+        m_data.reserve(capacity);
     }
 
     void push(T value) {
@@ -24,7 +26,7 @@ public:
 
     const T& top() const {
         assert(has_items());
-        return data[top_index];
+        return m_data[m_top_index];
     }
 
     void replace_top(T value) {
@@ -32,22 +34,22 @@ public:
     }
 
     bool empty() const {
-        return size == 0;
+        return m_size == 0;
     }
 
     bool has_items() const {
-        return size > 0;
+        return m_size > 0;
     }
 
     bool is_full() const {
-        return size == data.capacity();
+        return m_size == m_data.capacity();
     }
 
     size_t size() const {
-        return size;
+        return m_size;
     }
 
     size_t capacity() const {
-        return data.capacity();
+        return m_data.capacity();
     }
 };

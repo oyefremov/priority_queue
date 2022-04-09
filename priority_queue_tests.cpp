@@ -37,7 +37,7 @@ TEST(priority_queue, push_one_item_keep_capacity) {
 TEST(priority_queue, push_one_item) {
     priority_queue<int> queue(10);
     queue.push(1);
-    ASSERT_FALSE(queue.is_empty());
+    ASSERT_FALSE(queue.empty());
     EXPECT_TRUE(queue.has_items());
     EXPECT_EQ(1, queue.top());
 }
